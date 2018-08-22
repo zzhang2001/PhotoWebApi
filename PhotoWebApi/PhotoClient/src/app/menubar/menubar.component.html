@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" [routerLink]="['/home']">Angular Photo App</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/home']">Home</a>
+      </li>
+      <li class="nav-item" *ngIf="userService.SignedIn">
+        <a class="nav-link" [routerLink]="['/addphoto']">Add Photo</a>
+      </li>
+    </ul>
+    <ul *ngIf="!userService.SignedIn" class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/register']">Register</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/login']">Log in</a>
+      </li>
+    </ul>
+    <ul *ngIf="userService.SignedIn" class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="javascript:void(0)"> Welcome {{ userService.Email }}!</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="javascript:void(0)" (click)="Logout()">Log out</a>
+      </li>
+    </ul>
+  </div>
+</nav>

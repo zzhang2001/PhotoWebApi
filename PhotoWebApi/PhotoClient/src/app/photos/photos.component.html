@@ -1,0 +1,28 @@
+<h2>All Photos</h2>
+<div class="text-danger">
+  {{ errMsg }}
+</div>
+<div class="row">
+  <div class="col-md-4 mb-2" *ngFor="let photoViewModel of currentPhotoViewModels">
+    <div class="card">
+      <div>
+        <img src="/api/Photo/GetImage/{{ photoViewModel.photoId }}" class="card-img-top" />
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">{{ photoViewModel.title }}</h3>
+        <p class="card-text">Created by: {{ photoViewModel.userName }}</p>
+        <p class="card-text">Created On: {{ photoViewModel.createdDate | date:'yyyy-MM-dd HH:mm' }}</p>
+        <a [routerLink]="['/photo', photoViewModel.photoId]" class="btn btn-primary">Details</a>
+      </div>
+    </div>
+  </div>
+</div>
+<nav>
+  <ul class="pagination">
+    <li class="page-item" [class.active]="i == currentPage - 1"
+        *ngFor="let item of createRange(numOfPages); let i=index">
+      <a class="page-link" href="javascript:void(0)" (click)="showPage(i + 1)">{{ i + 1 }}</a>
+    </li>
+  </ul>
+</nav>
+

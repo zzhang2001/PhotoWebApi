@@ -1,0 +1,105 @@
+<h2>Details</h2>
+
+<div class="text-danger">
+  {{ errMsg }}
+</div>
+
+<div class="row mb-2">
+  <div class="col-md-6">
+    <div class="card">
+      <div>
+        <img src="/api/Photo/GetImage/{{ id }}" class="card-img" />
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <h3>{{ photoViewModel.title }}</h3>
+    <p>Description: {{ photoViewModel.description }}</p>
+    <p>Created by: {{ photoViewModel.userName }}</p>
+    <p>Created On: {{ photoViewModel.createdDate | date:'yyyy-MM-dd HH:mm' }}</p>
+    <p>Modified On: {{ photoViewModel.modifiedDate | date:'yyyy-MM-dd HH:mm' }}</p>
+    <p><button *ngIf="userService.SignedIn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmModal">Delete</button></p>
+  </div>
+</div>
+
+<div class="text-danger">
+  {{ updateErrMsg }}
+</div>
+
+<div class="row mb-2" *ngIf="userService.SignedIn">
+  <div class="col-md-6">
+    <form (ngSubmit)="UpdatePhoto()" [formGroup]="updatePhotoForm">
+      <h3>Update Photo Information</h3>
+      <div class="form-group">
+        <label for="newTitle">Title</label>
+        <input type="text" id="newTitle" class="form-control" formControlName="newTitle" />
+        <small *ngIf="newTitle.invalid && (newTitle.dirty || newTitle.touched)" class="text-danger">
+          Title is required.
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="newDescription">Description</label>
+        <textarea id="newDescription" class="form-control" cols="20" rows="3" formControlName="newDescription"></textarea>
+        <small *ngIf="newDescription.invalid && (newDescription.dirty || newDescription.touched)" class="text-danger">
+          Description is required.
+        </small>
+      </div>
+      <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Update" />
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal fade" id="confirmModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Confirm Deletion</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        Are you sure to delete this photo?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="DeletePhoto()">Delete</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-2">
+  <div class="col-md-6">
+    <h3>Comments</h3>
+    <div *ngIf="photoViewModel.relatedComments">
+      <div class="row" *ngFor="let comment of photoViewModel.relatedComments">
+        <div class="col-md-12">
+          <p>{{ comment.body }}</p>
+          <p style="font-size:small;color:#ff6a00">
+            By {{ comment.userName }} on {{ comment.createdDate  | date:'yyyy-MM-dd HH:mm' }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-danger">
+  {{ commentErrMsg }}
+</div>
+
+<div class="row" *ngIf="userService.SignedIn">
+  <div class="col-md-6">
+    <h3>Add Comment</h3>
+    <form (ngSubmit)="AddComment()" [formGroup]="addCommentForm">
+      <p>
+        <textarea id="newComment" class="form-control" cols="20" rows="3" formControlName="newComment"></textarea>
+        <small *ngIf="newComment.invalid && (newComment.dirty || newComment.touched)" class="text-danger">
+          Comment is required.
+        </small>
+      </p>
+      <p><button type="submit" class="btn btn-primary">Add Comment</button></p>
+    </form>
+  </div>
+</div>
+

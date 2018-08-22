@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Register</h2>
+      <form (ngSubmit)="Register()" [formGroup]="registerForm">
+        <h4>Create a new account.</h4>
+        <hr />
+        <div class="text-danger">
+          {{ errMsg }}
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" id="email" class="form-control" formControlName="email" />
+          <small *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+            <span *ngIf="email.errors.required">Email is required.</span>
+            <span *ngIf="email.errors.pattern">Email format is incorrect.</span>
+          </small>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" class="form-control" formControlName="password" />
+          <small *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+            Password is required.
+          </small>
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword" />
+          <small *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)" class="text-danger">
+            Confirm Password is required.
+          </small>
+          <div>
+            <small *ngIf="registerForm.errors?.passwordsNotMatch && (registerForm.dirty || registerForm.touched)" class="text-danger">
+              Passwords do not match.
+            </small>
+          </div>
+        </div>
+        <div>
+          <button [disabled]="registerForm.invalid || loading" type="submit" id="register" class="btn btn-default">Register</button>
+        </div>
+        <div *ngIf="loading">
+          <span class="text-info">Loading...</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

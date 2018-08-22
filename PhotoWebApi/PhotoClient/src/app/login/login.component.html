@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Login</h2>
+      <form (ngSubmit)="Login()" [formGroup]="loginForm">
+        <h4>Login to an existing account.</h4>
+        <hr />
+        <div class="text-danger">
+          {{ errMsg }}
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" id="email" class="form-control" formControlName="email" />
+          <small *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+            <span *ngIf="email.errors.required">Email is required.</span>
+            <span *ngIf="email.errors.pattern">Email format is incorrect.</span>
+          </small>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" class="form-control" formControlName="password" />
+          <small *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+            Password is required.
+          </small>
+        </div>
+        <div>
+          <button [disabled]="loginForm.invalid || loading" type="submit" id="login" class="btn btn-default">Login</button>
+        </div>
+        <div *ngIf="loading">
+          <span class="text-info">Loading...</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
